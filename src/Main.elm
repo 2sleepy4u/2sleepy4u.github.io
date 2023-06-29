@@ -36,7 +36,7 @@ container model =
 fetchPoem : Cmd Msg
 fetchPoem = 
     Http.get 
-        { url = "https://elm-lang.org/assets/public-opinion.txt"
+        { url = "https://raw.githubusercontent.com/2sleepy4u/2sleepy4u.github.io/main/poems/test.txt"
         , expect = Http.expectString GotPoem
         }
 
