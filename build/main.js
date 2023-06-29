@@ -6154,7 +6154,7 @@ var $author$project$Main$fetchPoem = $elm$http$Http$get(
 	});
 var $author$project$Types$Dark = 1;
 var $author$project$Main$initialModel = {
-	aJ: {aB: 'Si sta come d\'autunno', av: 'Internet'},
+	aJ: {aB: 'Loading...', av: 'Internet'},
 	Z: 1
 };
 var $author$project$Main$init = function (_v0) {

@@ -51,7 +51,7 @@ initialModel =
     { theme = Dark
     , poem = {
         title = "Internet",
-        body = "Si sta come d'autunno"
+        body = "Loading..."
         }
     }
 
