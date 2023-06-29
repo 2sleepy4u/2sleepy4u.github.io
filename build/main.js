@@ -6150,7 +6150,7 @@ var $elm$http$Http$get = function (r) {
 var $author$project$Main$fetchPoem = $elm$http$Http$get(
 	{
 		cm: $elm$http$Http$expectString($author$project$Types$GotPoem),
-		dy: 'https://elm-lang.org/assets/public-opinion.txt'
+		dy: 'https://raw.githubusercontent.com/2sleepy4u/2sleepy4u.github.io/main/poems/test.txt'
 	});
 var $author$project$Types$Dark = 1;
 var $author$project$Main$initialModel = {
