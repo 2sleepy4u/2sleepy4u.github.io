@@ -1,0 +1,10 @@
+{
+    "port": 58753,
+    "targets": {
+        "My target name": {
+            "compilationMode": "standard",
+            "browserUiPosition": "TopRight",
+            "openErrorOverlay": true
+        }
+    }
+}
