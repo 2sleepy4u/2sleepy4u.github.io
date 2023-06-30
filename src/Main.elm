@@ -12,6 +12,11 @@ import Element.Events as Events
 import Html exposing (Html)
 import List exposing (map)
 import Http
+import List exposing (map2)
+import Json.Decode exposing (..)
+import Random
+import Array exposing (Array)
+import Html exposing (wbr)
 
 colorBlack = E.rgb255 33 33 33
 colorWhiteBg = E.rgba255 207 204 198 0.6
@@ -33,10 +38,26 @@ container model =
         [ poem model
         ]
 
-fetchPoem : Cmd Msg
-fetchPoem = 
+fetchPoemlist : Cmd Msg
+fetchPoemlist = 
+    Http.get
+        { url = "https://raw.githubusercontent.com/2sleepy4u/2sleepy4u.github.io/main/poems/list.json"
+        , expect = Http.expectJson GotPoemList poemListDecoder
+        }
+
+poemListDecoder : Decoder PoemList
+poemListDecoder =
+    Json.Decode.array 
+        ( Json.Decode.map2 PoemData
+            (field "id" string)
+            (field "title" string)
+        )
+
+
+fetchPoem : String -> Cmd Msg
+fetchPoem poemId = 
     Http.get 
-        { url = "https://raw.githubusercontent.com/2sleepy4u/2sleepy4u.github.io/main/poems/punireConLaBellezza.txt"
+        { url = "https://raw.githubusercontent.com/2sleepy4u/2sleepy4u.github.io/main/poems/" ++ poemId ++ ".txt"
         , expect = Http.expectString GotPoem
         }
 
@@ -57,7 +78,7 @@ initialModel =
 
 init : Flags -> ( Model, Cmd Msg )
 init _ =
-    ( initialModel, fetchPoem )
+    ( initialModel, fetchPoemlist )
 
 
 main : Program Flags Model Msg
@@ -90,6 +111,18 @@ update msg model =
                     ({ model | poem = { title = model.poem.title, body = poem } }, Cmd.none )
                 Err _ ->
                     ( model, Cmd.none )
+        GetRandomPoem poemList index ->
+            case ( Array.get index poemList ) of
+                Just poem ->
+                    ( { model | poem = { title = poem.title, body = model.poem.body } }, fetchPoem poem.id )
+                Nothing ->
+                    ( model, Cmd.none )
+        GotPoemList result ->
+            case result of 
+                Ok poemList ->
+                    ( model, Random.generate ( GetRandomPoem poemList ) ( Random.int 1 6 ) )
+                Err _ ->
+                    ( model, Cmd.none)
         ChangeTheme ->
             case model.theme of 
                 Light -> 

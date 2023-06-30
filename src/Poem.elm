@@ -52,7 +52,7 @@ poem model =
             , E.padding 10
             , E.spacing 30
             , Border.width 1
-            , E.width <| E.px 370 
+            , E.width <| E.px 390 
             , E.height <| E.px 650 
             ]
             [ poemTitle model.poem.title 

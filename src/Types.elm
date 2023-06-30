@@ -1,6 +1,7 @@
 module Types exposing (..)
 
 import Http
+import Array exposing (Array)
 
 type alias Flags = {}
 
@@ -13,6 +14,8 @@ type Msg
     = NoOp
     | ChangeTheme
     | GotPoem (Result Http.Error String)
+    | GotPoemList (Result Http.Error PoemList)
+    | GetRandomPoem PoemList Int
 
 type Theme
     = Light
@@ -23,3 +26,9 @@ type alias Poem = {
     body: String
     }
 
+type alias PoemData = 
+    { id: String
+    , title: String
+    }
+
+type alias PoemList = Array PoemData
