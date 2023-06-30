@@ -20,6 +20,7 @@ type Msg
 type Theme
     = Light
     | Dark
+    | Error
 
 type alias Poem = {
     title: String,
