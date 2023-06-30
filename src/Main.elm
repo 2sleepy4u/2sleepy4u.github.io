@@ -41,7 +41,7 @@ container model =
 fetchPoemlist : Cmd Msg
 fetchPoemlist = 
     Http.get
-        { url = "https://raw.githubusercontent.com/2sleepy4u/2sleepy4u.github.io/main/poems/list.json"
+        { url = "https://raw.githubusercontent.com/2sleepy4u/2sleepy4u.github.io/main/list.json"
         , expect = Http.expectJson GotPoemList poemListDecoder
         }
 
@@ -120,9 +120,9 @@ update msg model =
         GotPoemList result ->
             case result of 
                 Ok poemList ->
-                    ( model, Random.generate ( GetRandomPoem poemList ) ( Random.int 1 6 ) )
-                Err _ ->
-                    ( model, Cmd.none)
+                    ( model, Random.generate ( GetRandomPoem poemList ) ( Random.int 1 <| Array.length poemList ) )
+                Err e ->
+                    ( { model | poem = { title = "Error", body = "GotPoemList" }}, Cmd.none)
         ChangeTheme ->
             case model.theme of 
                 Light -> 
