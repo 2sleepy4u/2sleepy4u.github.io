@@ -116,11 +116,11 @@ update msg model =
                 Just poem ->
                     ( { model | poem = { title = poem.title, body = model.poem.body } }, fetchPoem poem.id )
                 Nothing ->
-                    ( model, Cmd.none )
+                    ( { model | poem = { title = "Error", body = String.fromInt index }}, Cmd.none)
         GotPoemList result ->
             case result of 
                 Ok poemList ->
-                    ( model, Random.generate ( GetRandomPoem poemList ) ( Random.int 1 <| Array.length poemList ) )
+                    ( model, Random.generate ( GetRandomPoem poemList ) ( Random.int 0 <| ( Array.length poemList) - 1 ) )
                 Err e ->
                     ( { model | poem = { title = "Error", body = "GotPoemList" }}, Cmd.none)
         ChangeTheme ->
